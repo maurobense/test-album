@@ -1,3 +1,7 @@
+let cantidad = document.getElementById('cantidad');
+let btn = document.getElementById('btn');
+btn.addEventListener('click',probarX);
+
 let total = [];
 let misFig = [];
 let paquetes = 0;
@@ -38,13 +42,15 @@ function reset() {
   paquetes = 0;
 }
 
-function probarX(n) {
+function probarX() {
+  let n = document.getElementById('cnt').value;
   for (let i = 0; i < n; i++) {
     probar();
   }
   let promedio = totalPaquetes / n;
-  console.log(promedio)
+  cantidad.innerHTML = promedio;
   totalPaquetes = 0;
+  reset();
 
 }
 let fig = {}
