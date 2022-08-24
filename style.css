@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: skyblue;
+    display: flex;
+    justify-content: center;
+}
+div{
+    width: 200px;
+    height: fit-content;
+    display: inline-block;
+    margin: auto;
+    justify-content: center;
+    border-radius: 8px;
+   
+}
+div input, div button{
+    width: 100%;
+    border-radius: 8px;
+    padding-bottom: 4px;
+    text-decoration: none;
+    border-style: none;
+    text-align: center;
+    margin: 5px;
+}
+input{
+    padding: 10px 0px;
+}
+button{
+    background-color: #303030;
+    color: white;
+    transition: 200ms;
+}
+button:hover{
+    background-color: rgba(103, 18, 18, 0.459);
+    font-size: 18px;
+}
+button:active{
+    border-bottom: 2px solid wheat;
+}
