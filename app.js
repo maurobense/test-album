@@ -2,9 +2,9 @@ let btn = document.getElementById('btn');
 let tabla = document.getElementById('tabla');
 
 function compare(a,b) {
-    if (parseInt(a[1].puntaje) > parseInt(b[1].puntaje))
+    if (parseFloat(a[1].puntaje) > parseFloat(b[1].puntaje))
        return -1;
-    if (parseInt(a[1].puntaje) < parseInt(b[1].puntaje))
+    if (parseFloat(a[1].puntaje) < parseFloat(b[1].puntaje))
       return 1;
     return 0;
   }
