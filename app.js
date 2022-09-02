@@ -1,36 +1,43 @@
 let btn = document.getElementById('btn');
-let showMsj = document.getElementById('msjs');
+let tabla = document.getElementById('tabla');
 
+function compare(a,b) {
+    if (parseInt(a[1].puntaje) > parseInt(b[1].puntaje))
+       return -1;
+    if (parseInt(a[1].puntaje) < parseInt(b[1].puntaje))
+      return 1;
+    return 0;
+  }
+  
 (function () {
 
     let playerId;
     let playerRef;
     let msjRef;
 
-    btn.addEventListener('click', sendMsj)
+    btn.addEventListener('click', cargarPuntaje)
+
 
     function sendMsj(){
         let message = document.getElementById('msj').value;
         msjRef = firebase.database().ref(`players/${playerId}/msj`);
-        const messagges = firebase.database().ref('messages');
 
-        messagges.push(message)
-
-        msjRef.push(message)
-
-    }
-    function showMsg() {
-        const messages = firebase.database().ref('messages');
-
-        messages.on('child_added', (snap) => {
-            const arr = snap.val()
-            showMsj.innerHTML += `<p>${arr}</p>`
-        })
 
 
     }
+    //function showMsg() {
+       // const puntajes = firebase.database().ref('messages');
+
+        //messages.on('child_added', (snap) => {
+          //  const arr = snap.val()
+            //showMsj.innerHTML += `<p>${arr}</p>`
+        //})
+
+    //}
     function test() {
         const players = firebase.database().ref('players');
+        const puntajeRef = firebase.database().ref(`puntajes/`);
+
 
         console.log(playerId)
 
@@ -43,6 +50,35 @@ let showMsj = document.getElementById('msjs');
             const arr = snap.val()
             console.log(`${arr.name} left`)
         })
+        puntajeRef.on('value', (snap) => {
+            const personas = Object.entries(snap.val());
+            const personasOrder = personas.sort(compare);
+            tabla.innerHTML = '';
+
+
+            personas.sort(compare);
+            console.log(personasOrder)
+
+            personasOrder.forEach(persona => {
+                console.log(persona)
+                tabla.innerHTML += `<p>${persona[0]}: ${persona[1].puntaje}</p>`
+            });
+        })
+
+
+        
+
+    }
+    function cargarPuntaje(){
+        const aka = document.getElementById('aka').value;
+        const puntaje = document.getElementById('puntaje').value;
+        const puntajeRef = firebase.database().ref(`puntajes/${aka}`);
+
+        puntajeRef.set({
+            puntaje: puntaje
+        })
+
+
 
     }
   
@@ -65,7 +101,7 @@ let showMsj = document.getElementById('msjs');
             
             playerRef.onDisconnect().remove();
             test();
-            showMsg();
+            //showMsg();
 
         } else {
             //Logged out!
@@ -74,6 +110,7 @@ let showMsj = document.getElementById('msjs');
 
 
     })
+  
 
     firebase.auth().signInAnonymously().catch(e => {
         let errorCode = e.code;
